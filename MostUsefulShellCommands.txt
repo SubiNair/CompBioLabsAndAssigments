@@ -1,0 +1,14 @@
+ls -a : allows me to see the files that begin with . by performing the list command with -a flag
+
+cd : changing directories 
+
+pwd : this allows me to see where exactly I am, stands for print working directory
+
+history : allows me to retrace my steps if I need to my showing me a list of previous commands
+
+mkdir : creates a new directory
+
+rmdir : removes a directory
+
+mv : moves files 
+
