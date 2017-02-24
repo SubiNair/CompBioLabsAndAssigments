@@ -1,0 +1,13 @@
+Data Problem
+
+Overpopulation is an environmental and social issue on the horizon. 
+
+To give us an idea of which countries are mostly made up of children and experience higher birth rates, we can filter our Population ages 0 - 14 dataset based on higher percentage. We can then perform a series of calculations to see how quickly that child population has changed over the years and to what extent. 
+
+This can be used to further educate the public on the dangers of high birth rates and the danger it poses for women, particularly poor women in underdevloped areas. Providing comparisons to data on poverty levels can provide more insight.
+
+This may also require cross referencing with other data sets, such as those for infant mortality and poverty levels to provide more context for these numbers. Countries such as Ethiopia have recently experiences a drop in births, despite historically being known for high birth rates, due to increased educational oppurtunities for women and access to contraception. Drops in poverty has led to a decline in births as well (http://www.bbc.com/news/world-africa-34732609). 
+
+The goal is provide more conscise information on the link between population and poverty. Despite this being common knowledge for many in academic fields, overpopulation is an issue often skirted by media (as is climate change). 
+
+This data set is simply a small place to start with small calculations. 
