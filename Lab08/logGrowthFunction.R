@@ -1,0 +1,41 @@
+logGrowth <- function(iSize = 100, numberOfGens = 20, K = 500, r = 1.5) {
+  
+  #Warning for negative arguments where not possible
+  if(iSize < 0) {
+    print("ERROR: Initial Population MUST be 0 or greater!")
+  }
+  if(numberOfGens < 0) {
+    print("ERROR: Number of Generations MUST be 0 or greater!")
+  }
+  if(K < 0) {
+    print("ERROR: Carrying Capacity MUST be 0 or greater!")
+  }
+  
+  #First lets create a vector n that will hold our abundance values
+  #The first value will be the initial size of the population
+  n <- rep(0, numberOfGens)
+  n[1] <- iSize
+  
+  #Now we can loop through and calculate each value
+  for(t in seq(2,numberOfGens)) {
+    n[t] <- n[t-1] + ( r * n[t-1] * (K - n[t-1])/K )
+  }
+  
+  #We can make a y axis with a sequence from 1 to the number of Gens
+  #we print a plot and return the final abundances
+  timeGen <- seq(1,numberOfGens)
+  finalPlot <- plot(timeGen, n, xlab = "Generations", ylab = "Abundances")
+  return(n)
+}
+
+#example of the function being called
+print(logGrowth(1000, 20, 48000, .823))
+
+setwd("/Users/subi/Desktop/CompBioLabsAndAssignments/Lab08")
+myData <- logGrowth(1000, 20, 48000, .823)
+dataSize <- seq(1,length(myData))
+
+myDataFrame <- data.frame(dataSize, myData)
+
+colnames(myDataFrame) <- c("generations", "abundance")
+write.csv(myDataFrame, file = "myData.csv", row.names = FALSE)
