@@ -1,7 +1,7 @@
-##Lotka Volterra predator-prey model
-####Surabhi Nair
+## Lotka Volterra predator-prey model
+#### Surabhi Nair
 
-#####Background
+##### Background
 
 The logistic growth function script contains an implementation of the Lotka-Volterra predator prey model:
 
@@ -17,7 +17,7 @@ The variables in the logistic growth function include:
 
 The time t can be interpreted as the number of generations in a population. The model requires an initial population size, which is then affected by rate, carrying capacity, and as time passes, the previous generation's abundance.
 
-#####Implementation
+##### Implementation
 
 The function has four arguments: the initial population size, the number of generations (time), the carrying capacity, and the rate at which the population is growing. 
 
@@ -47,7 +47,7 @@ We then implement the equation through a for loop, which begins at the second ab
 
 The final portion of the function creates a plot of the data generated. 
 
-#####Data File
+##### Data File
 As an example, I generated data using a starting size of 1000, 20 generations, a K of 48000, and a rate of .823.
 
 The data was written into a vector which was then turned into a data frame. The data frame combines the vector returned by the function and a sequence of 1 to the number of gens, which in this case was 20.
