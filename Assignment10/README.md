@@ -13,7 +13,7 @@ The researchers observed the effects of the pesticides imidacloprid, λ-cyhaloth
 
 The data which was made available through Dryad Data Repository contains two excel spread sheets, one containing foraging data recorded throughout the period, and the other containing information on pollen load carried as well as the type of pollen. 
 
-*Inconsistencies*
+##### *Inconsistencies*
 For the recorded foraging time in the Foraging_duration.xlsx spreadsheet, some of the durations have 'AM' after them, even though they denote lengths of time and not timestamps. These will need to be removed while parsing the data.
 
 ##### **My Project**
