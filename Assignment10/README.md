@@ -24,5 +24,5 @@ I would also like to expand on the study a bit by using a Poisson distribution m
 ----------
 ##### **Acknowledgements**
 Gill RJ, Raine NE (2014) Chronic impairment of bumblebee natural foraging behaviour induced by sublethal pesticide exposure. Functional Ecology 28(6): 1459-1471.
-[Here is the publication](http://onlinelibrary.wiley.com/doi/10.1111/1365-2435.12292/full)
-[Here is the dryad repo](http://datadryad.org/resource/doi:10.5061/dryad.kv558)
+[Here is the publication](http://onlinelibrary.wiley.com/doi/10.1111/1365-2435.12292/full) and 
+[here is the dryad repo](http://datadryad.org/resource/doi:10.5061/dryad.kv558)
