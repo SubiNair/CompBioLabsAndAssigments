@@ -17,7 +17,7 @@ The data which was made available through Dryad Data Repository contains two exc
 For the recorded foraging time in the Foraging_duration.xlsx spreadsheet, some of the durations have 'AM' after them, even though they denote lengths of time and not timestamps. These will need to be removed while parsing the data. The other pollen spreadsheet uses dates to record time while the foraging one uses days since the experiment's beginning.
 
 ##### **My Project**
-I will be repeating part of the original study but focusing more on the pollen data. I will be analyzing the pollen (and by extension) flower preferences of the bees and how they change with prolonged exposure, for each of the pesticide treatments. 
+I will be repeating part of the original study but focusing more on the pollen data. I will be analyzing the pollen (and by extension) flower preferences of the bees and how they change with prolonged exposure, for each of the pesticide treatments. I will also recreate the regressions for foraging bouts for each of the pesticide treatments. 
 
 I would also like to expand on the study a bit by using a Poisson distribution model to model the amount of pollen brought in by each bee for each pesticide treatment. The researchers used a Poisson distribution for the number of foragers and the number of foraging bouts, but didn't do so for the pollen data.
 
