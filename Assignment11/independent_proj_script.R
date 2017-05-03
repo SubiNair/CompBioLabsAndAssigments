@@ -23,6 +23,7 @@ PollenData <- na.omit(PollenData)
 pDates <- as.vector(PollenData$Date)
 pColor <- PollenData$Pollen.Colour
 pScore <- PollenData$Pollen.Score
+pTreat <- as.vector(PollenData$Treatment)
 
 #by testing in the console we can see that the dates do follow an order
 #For example 2011-9-23 is greater than 2011-9-20
@@ -36,8 +37,27 @@ orderedScoreDates <- sort(scoreDates, decreasing = FALSE)
 #For example for 9-28, we can find all the indeces with 9-28,
 #And then those indeces in the pollen score data set will contain the pollen score for that date for that treatment
 
-#We are creating these distributions by treatement
+#We are creating these distributions by treatment
+#First we will start with the A treatment
+#Which was the control
+#Indeces for all the As in the treatment vector
+#Take those indeces to the scores and then average them
+#Now you have your lambda
+#Then we can use the dpois function or rpois (look into this)
 
+#This collects the indeces for the control and then finds their respective pollen scores
+ATreatLocs <- which(pTreat %in% "A")
+A_Scores <- pScore[ATreatLocs]
+
+#Calculating the respective lambda
+A_lambda <- mean(A_Scores)
+A_dpoisvals <- rep(0, 4)
+
+for (i in seq(0,3)) {
+  A_dpoisvals[i+1] <- dpois(x = i, lambda = A_lambda)
+}
+
+print(A_dpoisvals)
 
 
 
