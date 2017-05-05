@@ -57,8 +57,16 @@ ForagingReg <- function(treatment) {
 
 #Now that we have the matrix of just what we want we can plot it
 Aregression <- ForagingReg("A")
-plot(Aregression[,1], Aregression[,2])
+plot(Aregression[,1], Aregression[,2], xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
+Bregression <- ForagingReg("B")
+plot(Bregression[,1], Bregression[,2], xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+
+Cregression <- ForagingReg("C")
+plot(Cregression[,1], Cregression[,2], xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+
+Dregression <- ForagingReg("D")
+plot(Dregression[,1], Dregression[,2], xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
 
 
