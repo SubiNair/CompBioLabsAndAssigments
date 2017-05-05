@@ -19,6 +19,11 @@ ForagingData <- read.csv("Foraging_duration.csv")
 #PollenData$Pollen.Colour <- gsub("?",NA,PollenData$Pollen.Colour, fixed = TRUE)
 #PollenData <- na.omit(PollenData)
 
+#Assigning columns of Foraging data to variables
+daysSinceExp <- ForagingData$Days.after.start.of.experiment
+dailyBouts <- ForagingData$No..foraging.bouts.per.day
+fTreat <- ForagingData$Treatment
+
 #Assigning the columns to variables
 pDates <- as.vector(PollenData$Date)
 pColor <- PollenData$Pollen.Colour
@@ -48,6 +53,8 @@ possibleScores <- c(0,1,2,3)
 #Then we can use the dpois function or rpois (look into this)
 
 #This collects the indeces for the control and then finds their respective pollen scores
+
+
 ###A
 ATreatLocs <- which(pTreat %in% "A")
 A_Scores <- pScore[ATreatLocs]
