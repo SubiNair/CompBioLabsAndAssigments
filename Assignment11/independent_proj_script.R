@@ -22,7 +22,31 @@ ForagingData <- read.csv("Foraging_duration.csv")
 #Assigning columns of Foraging data to variables
 daysSinceExp <- ForagingData$Days.after.start.of.experiment
 dailyBouts <- ForagingData$No..foraging.bouts.per.day
-fTreat <- ForagingData$Treatment
+fTreat <- as.vector(ForagingData$Treatment)
+
+fparam <- length(fTreat)
+
+ForagingReg <- function(treatment) {
+  treatmentLocations <- which(fTreat %in% treatment)
+  treatBouts <- length(treatmentLocations)
+  print(treatBouts)
+  for(i in seq(0, treatBouts)) {
+  
+      foragingMatrix <- matrix(nrow = treatBouts, ncol = 2)
+      for(x in seq(1, treatBouts)) {
+        #Populate the matrix that we can later sort
+        for(y in seq(1,2)) {
+          if(y == 1) {
+            foragingMatrix[x,y] <- daysSinceExp[treatmentLocations[x]]
+          }
+          if(y == 2) {
+            foragingMatrix[x,y] <- dailyBouts[treatmentLocations[x]]
+          }
+        }
+      }
+  }
+  print(foragingMatrix)
+}
 
 #Assigning the columns to variables
 pDates <- as.vector(PollenData$Date)
