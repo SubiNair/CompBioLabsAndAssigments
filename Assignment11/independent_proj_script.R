@@ -36,6 +36,9 @@ ForagingReg <- function(treatment) {
       for(x in seq(1, treatBouts)) {
         #Populate the matrix that we can later sort
         for(y in seq(1,2)) {
+          
+          #Will either populate with the day or the actual bout number
+          #depending on the column
           if(y == 1) {
             foragingMatrix[x,y] <- daysSinceExp[treatmentLocations[x]]
           }
@@ -46,14 +49,15 @@ ForagingReg <- function(treatment) {
       }
   }
   
+  
+  #We want to sort by the days, the first column
   foragingMatrix <- foragingMatrix[order(foragingMatrix[,1]),]
-  #print(foragingMatrix)
   return(foragingMatrix)
 }
 
-#Now that we have the matrix of just what we want we can order it based on days
+#Now that we have the matrix of just what we want we can plot it
 Aregression <- ForagingReg("A")
-
+plot(Aregression[,1], Aregression[,2])
 
 
 
