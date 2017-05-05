@@ -45,8 +45,20 @@ ForagingReg <- function(treatment) {
         }
       }
   }
-  print(foragingMatrix)
+  
+  foragingMatrix <- foragingMatrix[order(foragingMatrix[,1]),]
+  #print(foragingMatrix)
+  return(foragingMatrix)
 }
+
+#Now that we have the matrix of just what we want we can order it based on days
+Aregression <- ForagingReg("A")
+
+
+
+
+
+
 
 #Assigning the columns to variables
 pDates <- as.vector(PollenData$Date)
