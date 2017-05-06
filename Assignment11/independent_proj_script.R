@@ -73,8 +73,11 @@ AvgReg <- function(matrixVals) {
   avgMatrix[,1] <- eachday
   t <- 1
   
+  
+  #We use the counter to move through the rows of our final matrix
   for(i in eachday) {
     vals <- matrixVals[matrixVals[,1] == i,]
+    #When using the above command, if there is only one match it will return as a vector and not a matrix so the else is to deal with this edge case
     if(length(vals) > 2) {
       regvals <- mean(vals[,2])
     }else {
