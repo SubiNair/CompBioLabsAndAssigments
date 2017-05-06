@@ -16,8 +16,17 @@ ForagingData <- read.csv(file.choose("Foraging_duration.csv"))
 daysSinceExp <- ForagingData$Days.after.start.of.experiment
 dailyBouts <- ForagingData$No..foraging.bouts.per.day
 fTreat <- as.vector(ForagingData$Treatment)
-
+pDates <- as.vector(PollenData$Date)
 fparam <- length(fTreat)
+
+#by testing in the console we can see that the dates do follow an order
+#For example 2011-9-23 is greater than 2011-9-20
+#We can use this to our advantage to order things chronologically
+#This will come in handy for the distribution
+
+scoreDates <- unique(pDates)
+orderedScoreDates <- sort(scoreDates, decreasing = FALSE)
+
 
 
 #This is a function to create a matrix of the days since the experiment
@@ -80,6 +89,11 @@ AvgReg <- function(matrixVals) {
 }
 
 #Now that we have the matrix of just what we want we can plot it
+#The plots that are commented out contain all of the data points
+#They were useful for providing some insight into the dataset but I ended up using the average values to repeat the analysis
+#They can however still be visualized if one would like to take a look
+
+
 Aregression <- ForagingReg("A")
 #plot(Aregression[,1], Aregression[,2], ylim = c(0,40), main = "A Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
@@ -207,6 +221,78 @@ print(D_dpoisvals)
 plot(possibleScores, D_dpoisvals, xlab = "Pollen Score", ylab = "Probability", ylim = c(0,.5), main = "Treatment D Poisson Distribution for Pollen Score")
 lines(lowess(possibleScores,D_dpoisvals), col="green")
 
+########## POLLEN SCORE OVER TIME ###############
+
+
+#We can create a generalized function to pull out any values based on treatment alone
+PolScore <- function(treatment, xvec) {
+  treatindeces <- which(pTreat %in% treatment)
+  print(treatindeces)
+  treatmentlength <- length(treatindeces)
+  polscorer <- rep(0, treatmentlength)
+  for(i in seq(1,treatmentlength)) {
+    polscorer[i] <- xvec[treatindeces[i]]
+  }
+  
+  print(polscorer)
+  return(polscorer)
+}
+
+
+APolScore <- PolScore("A", pScore)
+ADates <- PolScore("A", pDates)
+
+BPolScore <- PolScore("B", pScore)
+BDates <- PolScore("B", pDates)
+
+CPolScore <- PolScore("C", pScore)
+CDates <- PolScore("C", pDates)
+
+DPolScore <- PolScore("D", pScore)
+DDates <- PolScore("D", pDates)
+
+#This is a function to create an aggregate of all the pollen scores
+PollenCalculator <- function(treatScore, treatdates) {
+  print(length(treatdates))
+  newDates <- rep(0, length(treatdates))
+  
+  #we want the matrix to have a slot for all the dates
+  scoreMatrix <- matrix(nrow = length(treatdates), ncol = 2)
+  for(i in seq(1,length(treatdates))) {
+    
+    #Since the dates are ordered in a vector already
+    #We can use the index to denote the days since the start of the records
+    newDates[i] <- match(treatdates[i],orderedScoreDates)
+    
+  }
+  for(i in seq(1, length(treatScore))) {
+    scoreMatrix[i, 1] <- newDates[i]
+    scoreMatrix[i, 2] <- treatScore[i]
+  }
+  
+  finalscoreMatrix <- scoreMatrix[order(scoreMatrix[,1]),]
+  return(finalscoreMatrix)
+}
+
+#And once again we can use our average function
+#Once that has been calculated we can plot with regression lines
+
+ATotalScore <- AvgReg(PollenCalculator(APolScore, ADates))
+plot(ATotalScore[,1], ATotalScore[,2], xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment A Pollen Load Collection")
+abline(lm(ATotalScore[,2]~ATotalScore[,1]), col="red")
+
+BTotalScore <- AvgReg(PollenCalculator(BPolScore, BDates))
+plot(BTotalScore[,1], BTotalScore[,2], xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment B Pollen Load Collection")
+abline(lm(BTotalScore[,2]~BTotalScore[,1]), col="blue")
+
+CTotalScore <- AvgReg(PollenCalculator(CPolScore, CDates))
+plot(CTotalScore[,1], CTotalScore[,2], ylim = c(0,3),xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment C Pollen Load Collection")
+abline(lm(CTotalScore[,2]~CTotalScore[,1]), col="black")
+
+DTotalScore <- AvgReg(PollenCalculator(DPolScore, DDates))
+plot(DTotalScore[,1], DTotalScore[,2], xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment D Pollen Load Collection")
+abline(lm(DTotalScore[,2]~DTotalScore[,1]), col="green")
+
 ############ FLOWER PREFERENCE #############
 
 #Fixing the Pollen Data csv file
@@ -219,31 +305,10 @@ lines(lowess(possibleScores,D_dpoisvals), col="green")
 #The NA discardation only positively impacts this analysis
 
 PollenData$Pollen.Colour <- gsub("?",NA,PollenData$Pollen.Colour, fixed = TRUE)
-PollenData <- na.omit(PollenData)
+PollenDataNew <- na.omit(PollenData)
 
-pDates <- as.vector(PollenData$Date)
-pColor <- PollenData$Pollen.Colour
-
-#by testing in the console we can see that the dates do follow an order
-#For example 2011-9-23 is greater than 2011-9-20
-#We can use this to our advantage to order things chronologically
-#This will come in handy for the distribution
-
-scoreDates <- unique(pDates)
-orderedScoreDates <- sort(scoreDates, decreasing = FALSE)
-
+pColor <- PollenDataNew$Pollen.Colour
 eachPref <- unique(pColor)
-
-#We can create a generalized function to pull out any values based on treatment alone
-PolScore <- function(treatment, xvec) {
-  treatindeces <- which(pTreat %in% treatment)
-  treatmentlength <- length(treatindeces)
-  polscorer <- rep(0, treatmentlength)
-  for(i in seq(1,treatmentlength)) {
-    polscorer[i] <- xvec[treatindeces[i]]
-  }
-  return(polscorer)
-}
 
 
 #For each of the treatments let us look at the top 4 flower types
@@ -261,59 +326,5 @@ barplot(C_poltypes, xlab = "Flower Type", ylim = c(0, 60),ylab = "Total Collecte
 
 D_poltypes <- PolScore("D", pColor)
 D_poltypes <- sort(table(D_poltypes),decreasing=TRUE)[1:4]
-barplot(D_poltypes, xlab = "Flower Type", ylim = c(0, 60), ylab = "Total Collected", main = "Treatment D flower preferences", col = "light green")
-
-########## POLLEN SCORE OVER TIME ###############
-
-#We can use the same function from above to pull out scores
-#We can also interpret the dates as days since the experiment
-#by using their indeces
-
-APolScore <- PolScore("A", pScore)
-ADates <- PolScore("A", pDates)
-
-BPolScore <- PolScore("B", pScore)
-BDates <- PolScore("B", pDates)
-
-CPolScore <- PolScore("C", pScore)
-CDates <- PolScore("C", pDates)
-
-DPolScore <- PolScore("D", pScore)
-DDates <- PolScore("D", pDates)
-
-PollenCalculator <- function(treatScore, treatdates) {
-  print(treatdates)
-  newDates <- rep(0, length(treatdates))
-  scoreMatrix <- matrix(nrow = length(treatScore), ncol = 2)
-  for(i in seq(1,length(treatdates))) {
-   # print(orderedScoreDates)
-    newDates[i] <- match(treatdates[i],orderedScoreDates)
-  }
-  for(i in seq(1, length(treatScore))) {
-    scoreMatrix[i, 1] <- newDates[i]
-    scoreMatrix[i, 2] <- treatScore[i]
-  }
-  
-  scoreMatrix <- scoreMatrix[order(scoreMatrix[,1]),]
-  return(scoreMatrix)
-}
-
-#And once again we can use our average function
-#Once that has been calculated we can plot with regression lines
-
-ATotalScore <- AvgReg(PollenCalculator(APolScore, ADates))
-plot(ATotalScore[,1], ATotalScore[,2], xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment A Pollen Load Collection")
-abline(lm(ATotalScore[,2]~ATotalScore[,1]), col="red")
-
-BTotalScore <- AvgReg(PollenCalculator(BPolScore, BDates))
-plot(BTotalScore[,1], BTotalScore[,2], xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment B Pollen Load Collection")
-abline(lm(BTotalScore[,2]~BTotalScore[,1]), col="blue")
-
-CTotalScore <- AvgReg(PollenCalculator(CPolScore, CDates))
-plot(CTotalScore[,1], CTotalScore[,2], xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment C Pollen Load Collection")
-abline(lm(CTotalScore[,2]~CTotalScore[,1]), col="black")
-
-DTotalScore <- AvgReg(PollenCalculator(DPolScore, DDates))
-plot(DTotalScore[,1], DTotalScore[,2], xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment D Pollen Load Collection")
-abline(lm(DTotalScore[,2]~DTotalScore[,1]), col="green")
+barplot(D_poltypes, xlab = "Flower Type", ylim = c(0, 90), ylab = "Total Collected", main = "Treatment D flower preferences", col = "light green")
 
