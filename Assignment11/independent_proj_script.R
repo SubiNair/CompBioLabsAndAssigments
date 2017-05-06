@@ -60,6 +60,7 @@ AvgReg <- function(matrixVals) {
   totaldays <- length(eachday)
   avgMatrix <- matrix(nrow = totaldays, ncol = 2)
   avgMatrix[,1] <- eachday
+  t <- 1
   for(i in eachday) {
     vals <- matrixVals[matrixVals[,1] == i,]
     #print(vals)
@@ -71,7 +72,9 @@ AvgReg <- function(matrixVals) {
     }
    # print(i)
    # print(regvals)
-    avgMatrix[i+1, 2] <- regvals
+    avgMatrix[t, 2] <- regvals
+    t <- t + 1
+  
   }
   
   return(avgMatrix)
@@ -82,20 +85,20 @@ AvgReg <- function(matrixVals) {
 #Now that we have the matrix of just what we want we can plot it
 Aregression <- ForagingReg("A")
 AregAvg <- AvgReg(Aregression)
-
 plot(AregAvg[,1], AregAvg[,2], main = "Average A Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
 
-
-
 Bregression <- ForagingReg("B")
-plot(Bregression[,1], Bregression[,2], main = "B Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+BregAvg <- AvgReg(Bregression)
+plot(BregAvg[,1], BregAvg[,2], main = "Average B Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
 Cregression <- ForagingReg("C")
-plot(Cregression[,1], Cregression[,2], main = "C Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+CregAvg <- AvgReg(Cregression)
+plot(CregAvg[,1], CregAvg[,2], main = "Average C Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
 Dregression <- ForagingReg("D")
-plot(Dregression[,1], Dregression[,2], main = "D Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+DregAvg <- AvgReg(Dregression)
+plot(DregAvg[,1], DregAvg[,2], main = "D Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
 
 
