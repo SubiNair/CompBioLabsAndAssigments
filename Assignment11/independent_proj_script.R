@@ -1,10 +1,11 @@
+#Surabhi Nair
+#Final Project
 
 #Using the r package rio we can convert our xlsx files to csv files
-
 #library(rio)
 #convert("Pollen_score_colour.xlsx", "Pollen_score_colour.csv")
 #convert("Foraging_duration.xlsx", "Foraging_duration.csv")
-
+#This is why there are csv files that are able to be read
 
 PollenData <- read.csv(file.choose("Pollen_score_colour.csv"))
 ForagingData <- read.csv(file.choose("Foraging_duration.csv"))
@@ -114,6 +115,12 @@ abline(lm(DregAvg[,2]~DregAvg[,1]), col="green")
 
 ########## POLLEN SCORE POISSON CALCULATIONS #################
 
+
+## IMPORTANT
+#These need to be performed after the csv has been read BEFORE any rows are discarded for containing NA values later down the line for the flower type analysis
+#This means that if the program has been run all the way through
+#In order to get the correct poisson results, the csv files need to be read in again
+
 #Assigning the columns to variables
 
 
@@ -151,7 +158,7 @@ for (i in possibleScores) {
 print(A_dpoisvals)
 plot(possibleScores, A_dpoisvals, xlab = "Pollen Score", ylab = "Probability", ylim = c(0,.5), main = "Treatment A Poisson Distribution for Pollen Score")
 lines(lowess(possibleScores,A_dpoisvals), col="red")
-summary(Aline)
+
 
 ######B
 BTreatLocs <- which(pTreat %in% "B")
@@ -205,6 +212,11 @@ lines(lowess(possibleScores,D_dpoisvals), col="green")
 #Fixing the Pollen Data csv file
 #Some of the pollen colours are listed as "?" and so we can replace them with NA
 #And then get rid of anything with an NA
+
+#IMPORTANT NOTE
+#Since we are discarding rows with NA here, the csv files
+#Will need to be reread into the program before redoing any other distributions
+#The NA discardation only positively impacts this analysis
 
 PollenData$Pollen.Colour <- gsub("?",NA,PollenData$Pollen.Colour, fixed = TRUE)
 PollenData <- na.omit(PollenData)
