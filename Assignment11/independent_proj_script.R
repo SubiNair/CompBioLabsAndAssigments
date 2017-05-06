@@ -280,5 +280,5 @@ PollenCalculator <- function(treatScore, treatdates) {
 ATotalScore <- AvgReg(PollenCalculator(APolScore, ADates))
 
 plot(ATotalScore[,1], ATotalScore[,2], xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment A Pollen Load Collection")
-
+abline(lm(ATotalScore[,2]~ATotalScore[,1]), col="red")
 
