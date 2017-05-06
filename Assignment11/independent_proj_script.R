@@ -252,5 +252,33 @@ barplot(D_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Trea
 
 ########## POLLEN SCORE OVER TIME ###############
 
+#We can use the same function from above to pull out scores
+#We can also interpret the dates as days since the experiment
+#by using their indeces
+
+APolScore <- PolScore("A", pScore)
+ADates <- PolScore("A", pDates)
+
+PollenCalculator <- function(treatScore, treatdates) {
+  print(treatdates)
+  newDates <- rep(0, length(treatdates))
+  scoreMatrix <- matrix(nrow = length(treatScore), ncol = 2)
+  for(i in seq(1,length(treatdates))) {
+   # print(orderedScoreDates)
+    newDates[i] <- match(treatdates[i],orderedScoreDates)
+  }
+  for(i in seq(1, length(treatScore))) {
+    scoreMatrix[i, 1] <- newDates[i]
+    scoreMatrix[i, 2] <- treatScore[i]
+  }
+  
+  scoreMatrix <- scoreMatrix[order(scoreMatrix[,1]),]
+  return(scoreMatrix)
+}
+
+#And once again we can use our average function
+ATotalScore <- AvgReg(PollenCalculator(APolScore, ADates))
+
+plot(ATotalScore[,1], ATotalScore[,2], xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment A Pollen Load Collection")
 
 
