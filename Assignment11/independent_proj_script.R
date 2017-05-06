@@ -80,34 +80,37 @@ AvgReg <- function(matrixVals) {
 
 #Now that we have the matrix of just what we want we can plot it
 Aregression <- ForagingReg("A")
-plot(Aregression[,1], Aregression[,2], ylim = c(0,40), main = "A Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+#plot(Aregression[,1], Aregression[,2], ylim = c(0,40), main = "A Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
 AregAvg <- AvgReg(Aregression)
-plot(AregAvg[,1], AregAvg[,2], ylim = c(0,40), main = "Average A Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
-
+plot(AregAvg[,1], AregAvg[,2], ylim = c(0,12), main = "Average A Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Average Daily Foraging Bouts")
+abline(lm(AregAvg[,2]~AregAvg[,1]), col="red")
 
 Bregression <- ForagingReg("B")
-
-plot(Bregression[,1], Bregression[,2], main = "Average B Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+#plot(Bregression[,1], Bregression[,2], main = "Average B Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
 BregAvg <- AvgReg(Bregression)
-plot(BregAvg[,1], BregAvg[,2], ylim = c(0,12), main = "Average B Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+plot(BregAvg[,1], BregAvg[,2], ylim = c(0,12), main = "Average B Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Average Daily Foraging Bouts")
+abline(lm(BregAvg[,2]~BregAvg[,1]), col="blue")
+
 
 Cregression <- ForagingReg("C")
-plot(Cregression[,1], Cregression[,2], ylim = c(0,40), main = "Average C Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+#plot(Cregression[,1], Cregression[,2], ylim = c(0,40), main = "Average C Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
 
 
 CregAvg <- AvgReg(Cregression)
-plot(CregAvg[,1], CregAvg[,2], ylim = c(0,12),main = "Average C Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+plot(CregAvg[,1], CregAvg[,2], ylim = c(0,12),main = "Average C Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Average Daily Foraging Bouts")
+abline(lm(CregAvg[,2]~CregAvg[,1]), col="black")
+
 
 Dregression <- ForagingReg("D")
-plot(Dregression[,1], Dregression[,2], ylim = c(0,40), main = "D Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+#plot(Dregression[,1], Dregression[,2], ylim = c(0,40), main = "D Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
 
 DregAvg <- AvgReg(Dregression)
-plot(DregAvg[,1], DregAvg[,2], ylim = c(0,12), main = "D Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
-
+plot(DregAvg[,1], DregAvg[,2], ylim = c(0,12), main = "Average D Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Average Daily Foraging Bouts")
+abline(lm(DregAvg[,2]~DregAvg[,1]), col="green")
 
 ########## POLLEN SCORE POISSON CALCULATIONS #################
 
@@ -236,19 +239,19 @@ PolScore <- function(treatment, xvec) {
 #For each of the treatments let us look at the top 4 flower types
 A_poltypes <- PolScore("A", pColor)
 A_poltypes <- sort(table(A_poltypes),decreasing=TRUE)[1:4]
-barplot(A_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Treatment A flower preferences")
+barplot(A_poltypes, xlab = "Flower Type",ylim = c(0, 60), ylab = "Total Collected", main = "Treatment A flower preferences", col = "dark blue")
 
 B_poltypes <- PolScore("B", pColor)
 B_poltypes <- sort(table(B_poltypes),decreasing=TRUE)[1:4]
-barplot(B_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Treatment B flower preferences")
+barplot(B_poltypes, xlab = "Flower Type", ylim = c(0, 60),ylab = "Total Collected", main = "Treatment B flower preferences", col = "light blue")
 
 C_poltypes <- PolScore("C", pColor)
 C_poltypes <- sort(table(C_poltypes),decreasing=TRUE)[1:4]
-barplot(C_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Treatment C flower preferences")
+barplot(C_poltypes, xlab = "Flower Type", ylim = c(0, 60),ylab = "Total Collected", main = "Treatment C flower preferences", col = "black")
 
 D_poltypes <- PolScore("D", pColor)
 D_poltypes <- sort(table(D_poltypes),decreasing=TRUE)[1:4]
-barplot(D_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Treatment D flower preferences")
+barplot(D_poltypes, xlab = "Flower Type", ylim = c(0, 60), ylab = "Total Collected", main = "Treatment D flower preferences", col = "light green")
 
 ########## POLLEN SCORE OVER TIME ###############
 
