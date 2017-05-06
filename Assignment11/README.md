@@ -41,9 +41,9 @@ What I found through my Poisson distribution analysis was that for the treatment
 This is strong additional evidence to suggest that imidacloprid specifically harms bees ability to forage effectively. 
 
 The Control and the LC treatment respectively:
-![C Poisson Values](https://github.com/SubiNair/CompBioLabsAndAssigments/blob/master/Assignment11/DPoisson.png "C Poisson Values")
+![C Poisson Values](https://github.com/SubiNair/CompBioLabsAndAssigments/blob/master/Assignment11/CPoisson.png "C Poisson Values")
 
-![A Poisson Values](https://github.com/SubiNair/CompBioLabsAndAssigments/blob/master/Assignment11/DPoisson.png "A Poisson Values")
+![A Poisson Values](https://github.com/SubiNair/CompBioLabsAndAssigments/blob/master/Assignment11/APoisson.png "A Poisson Values")
 
 
 For the analysis that I repeated, I decided to visualize the flower preference results in a bar plot instead of a pie chart, and I used only the top 4 flowers visited. 
@@ -53,5 +53,7 @@ The imidacloprid treatments displayed a stronger preference for AU2 (Which based
 ![D Flower Pref](https://github.com/SubiNair/CompBioLabsAndAssigments/blob/master/Assignment11/DFlowerPref.png)
 
 The LC Treatments:
+
 ![A Flower Pref](https://github.com/SubiNair/CompBioLabsAndAssigments/blob/master/Assignment11/AFlowerPref.png)
+
 
