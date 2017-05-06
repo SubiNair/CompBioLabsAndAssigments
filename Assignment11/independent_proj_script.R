@@ -1,23 +1,15 @@
-#setwd("/Users/subi/Desktop/CompBioLabsAndAssignments/Assignment11")
 
-#The above is to set my working directory to where my files will be
 #Using the r package rio we can convert our xlsx files to csv files
 
 #library(rio)
 #convert("Pollen_score_colour.xlsx", "Pollen_score_colour.csv")
 #convert("Foraging_duration.xlsx", "Foraging_duration.csv")
 
-#This way all of the empty cells are turned into NAs as well
-#Now we can actually read them in and remove all of the NA values
 
-PollenData <- file.choose("Pollen_score_colour.csv")
-ForagingData <- file.choose("Foraging_duration.csv")
+PollenData <- read.csv(file.choose("Pollen_score_colour.csv"))
+ForagingData <- read.csv(file.choose("Foraging_duration.csv"))
 
-#Fixing the Pollen Data csv file
-#Some of the pollen colours are listed as "?" and so we can replace them with NA
-#And then get rid of anything with an NA
-#PollenData$Pollen.Colour <- gsub("?",NA,PollenData$Pollen.Colour, fixed = TRUE)
-#PollenData <- na.omit(PollenData)
+
 
 #Assigning columns of Foraging data to variables
 daysSinceExp <- ForagingData$Days.after.start.of.experiment
@@ -26,6 +18,9 @@ fTreat <- as.vector(ForagingData$Treatment)
 
 fparam <- length(fTreat)
 
+
+#This is a function to create a matrix of the days since the experiment
+#and the amount of bouts for those days 
 ForagingReg <- function(treatment) {
   treatmentLocations <- which(fTreat %in% treatment)
   treatBouts <- length(treatmentLocations)
@@ -55,23 +50,26 @@ ForagingReg <- function(treatment) {
   return(foragingMatrix)
 }
 
+
+#This function will then calculate the averages for each day
+#We will base the regression off of this
 AvgReg <- function(matrixVals) {
+  
+  #eachday carries the unique dates
+  #We can then use the size of eachday to determine how many rows we need
   eachday <- unique(matrixVals[,1])
   totaldays <- length(eachday)
   avgMatrix <- matrix(nrow = totaldays, ncol = 2)
   avgMatrix[,1] <- eachday
   t <- 1
+  
   for(i in eachday) {
     vals <- matrixVals[matrixVals[,1] == i,]
-    #print(vals)
-    #print(length(vals))
     if(length(vals) > 2) {
       regvals <- mean(vals[,2])
     }else {
       regvals <- vals[2]
     }
-   # print(i)
-   # print(regvals)
     avgMatrix[t, 2] <- regvals
     t <- t + 1
   
@@ -82,37 +80,42 @@ AvgReg <- function(matrixVals) {
 
 #Now that we have the matrix of just what we want we can plot it
 Aregression <- ForagingReg("A")
+plot(Aregression[,1], Aregression[,2], ylim = c(0,40), main = "A Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+
 AregAvg <- AvgReg(Aregression)
-plot(AregAvg[,1], AregAvg[,2], main = "Average A Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+plot(AregAvg[,1], AregAvg[,2], ylim = c(0,40), main = "Average A Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
 
 Bregression <- ForagingReg("B")
+
+plot(Bregression[,1], Bregression[,2], main = "Average B Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+
 BregAvg <- AvgReg(Bregression)
-plot(BregAvg[,1], BregAvg[,2], main = "Average B Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+plot(BregAvg[,1], BregAvg[,2], ylim = c(0,12), main = "Average B Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
 Cregression <- ForagingReg("C")
+plot(Cregression[,1], Cregression[,2], ylim = c(0,40), main = "Average C Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+
+
+
 CregAvg <- AvgReg(Cregression)
-plot(CregAvg[,1], CregAvg[,2], main = "Average C Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+plot(CregAvg[,1], CregAvg[,2], ylim = c(0,12),main = "Average C Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
 Dregression <- ForagingReg("D")
+plot(Dregression[,1], Dregression[,2], ylim = c(0,40), main = "D Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+
+
 DregAvg <- AvgReg(Dregression)
-plot(DregAvg[,1], DregAvg[,2], main = "D Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
+plot(DregAvg[,1], DregAvg[,2], ylim = c(0,12), main = "D Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
 
 
 ########## POLLEN SCORE POISSON CALCULATIONS #################
 
 #Assigning the columns to variables
-pDates <- as.vector(PollenData$Date)
-pColor <- PollenData$Pollen.Colour
+
+
 pScore <- PollenData$Pollen.Score
 pTreat <- as.vector(PollenData$Treatment)
-
-#by testing in the console we can see that the dates do follow an order
-#For example 2011-9-23 is greater than 2011-9-20
-#We can use this to our advantage to order things chronologically
-#This will come in handy for the distribution
-scoreDates <- unique(pDates)
-orderedScoreDates <- sort(scoreDates, decreasing = FALSE)
 
 #We can use these individual dates to find their locations in the original set of dates
 #Then we can use that index to find a corresponding pollen score
@@ -194,4 +197,59 @@ for (i in possibleScores) {
 
 print(D_dpoisvals)
 plot(possibleScores, D_dpoisvals, xlab = "Pollen Score", ylab = "Probability", ylim = c(0,.5))
+
+
+############ FLOWER PREFERENCE #############
+
+#Fixing the Pollen Data csv file
+#Some of the pollen colours are listed as "?" and so we can replace them with NA
+#And then get rid of anything with an NA
+
+PollenData$Pollen.Colour <- gsub("?",NA,PollenData$Pollen.Colour, fixed = TRUE)
+PollenData <- na.omit(PollenData)
+
+pDates <- as.vector(PollenData$Date)
+pColor <- PollenData$Pollen.Colour
+
+#by testing in the console we can see that the dates do follow an order
+#For example 2011-9-23 is greater than 2011-9-20
+#We can use this to our advantage to order things chronologically
+#This will come in handy for the distribution
+
+scoreDates <- unique(pDates)
+orderedScoreDates <- sort(scoreDates, decreasing = FALSE)
+
+eachPref <- unique(pColor)
+
+#We can write a function that takes in a treatment
+#And then only look at the flower preferences 
+flowerPrefTreat <- function(treatment) {
+  treatindeces <- which(pTreat %in% treatment)
+  subsize <- length(treatindeces)
+  polcolors <- rep(0, subsize)
+  for(i in seq(1,subsize)) {
+    polcolors[i] <- pColor[treatindeces[i]]
+  }
+  
+  return(polcolors)
+}
+
+
+#For each of the treatments let us look at the top 4 flower types
+A_poltypes <- flowerPrefTreat("A")
+A_poltypes <- sort(table(A_poltypes),decreasing=TRUE)[1:4]
+barplot(A_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Treatment A flower preferences")
+
+B_poltypes <- flowerPrefTreat("B")
+B_poltypes <- sort(table(B_poltypes),decreasing=TRUE)[1:4]
+barplot(B_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Treatment B flower preferences")
+
+C_poltypes <- flowerPrefTreat("C")
+C_poltypes <- sort(table(C_poltypes),decreasing=TRUE)[1:4]
+barplot(C_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Treatment C flower preferences")
+
+D_poltypes <- flowerPrefTreat("D")
+D_poltypes <- sort(table(D_poltypes),decreasing=TRUE)[1:4]
+barplot(D_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Treatment D flower preferences")
+
 
