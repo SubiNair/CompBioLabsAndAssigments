@@ -128,17 +128,15 @@ pTreat <- as.vector(PollenData$Treatment)
 possibleScores <- c(0,1,2,3)
 
 #We are creating these distributions by treatment
-#First we will start with the A treatment
-#Which was the control
+#First we will start with the A treatment as an example
 #Indeces for all the As in the treatment vector
 #Take those indeces to the scores and then average them
 #Now you have your lambda
-#Then we can use the dpois function or rpois (look into this)
-
-#This collects the indeces for the control and then finds their respective pollen scores
+#Then we can use the dpois function to calculate probability for a bee bringing back a certain amount of pollen
 
 
 ###A
+#This collects the indeces for the control and then finds their respective pollen scores
 ATreatLocs <- which(pTreat %in% "A")
 A_Scores <- pScore[ATreatLocs]
 
@@ -151,8 +149,8 @@ for (i in possibleScores) {
 }
 
 print(A_dpoisvals)
-plot(possibleScores, A_dpoisvals, xlab = "Pollen Score", ylab = "Probability", ylim = c(0,.5))
-Aline <- lm(A_dpoisvals ~ poly(possibleScores, 2))
+plot(possibleScores, A_dpoisvals, xlab = "Pollen Score", ylab = "Probability", ylim = c(0,.5), main = "Treatment A Poisson Distribution for Pollen Score")
+lines(lowess(possibleScores,A_dpoisvals), col="red")
 summary(Aline)
 
 ######B
@@ -168,8 +166,8 @@ for (i in possibleScores) {
 }
 
 print(B_dpoisvals)
-plot(possibleScores, B_dpoisvals, xlab = "Pollen Score", ylab = "Probability", ylim = c(0,.5))
-
+plot(possibleScores, B_dpoisvals, xlab = "Pollen Score", ylab = "Probability", ylim = c(0,.5), main = "Treatment B Poisson Distribution for Pollen Score")
+lines(lowess(possibleScores,B_dpoisvals), col="blue")
 
 ####C
 CTreatLocs <- which(pTreat %in% "C")
@@ -184,8 +182,8 @@ for (i in possibleScores) {
 }
 
 print(C_dpoisvals)
-plot(possibleScores, C_dpoisvals, xlab = "Pollen Score", ylab = "Probability", ylim = c(0,.5))
-
+plot(possibleScores, C_dpoisvals, xlab = "Pollen Score", ylab = "Probability", ylim = c(0,.5), main = "Treatment C Poisson Distribution for Pollen Score")
+lines(lowess(possibleScores,C_dpoisvals), col="black")
 ####D
 DTreatLocs <- which(pTreat %in% "D")
 D_Scores <- pScore[DTreatLocs]
@@ -199,8 +197,8 @@ for (i in possibleScores) {
 }
 
 print(D_dpoisvals)
-plot(possibleScores, D_dpoisvals, xlab = "Pollen Score", ylab = "Probability", ylim = c(0,.5))
-
+plot(possibleScores, D_dpoisvals, xlab = "Pollen Score", ylab = "Probability", ylim = c(0,.5), main = "Treatment D Poisson Distribution for Pollen Score")
+lines(lowess(possibleScores,D_dpoisvals), col="green")
 
 ############ FLOWER PREFERENCE #############
 
