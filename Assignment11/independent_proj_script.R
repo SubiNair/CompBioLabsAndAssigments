@@ -221,35 +221,36 @@ orderedScoreDates <- sort(scoreDates, decreasing = FALSE)
 
 eachPref <- unique(pColor)
 
-#We can write a function that takes in a treatment
-#And then only look at the flower preferences 
-flowerPrefTreat <- function(treatment) {
+#We can create a generalized function to pull out any values based on treatment alone
+PolScore <- function(treatment, xvec) {
   treatindeces <- which(pTreat %in% treatment)
-  subsize <- length(treatindeces)
-  polcolors <- rep(0, subsize)
-  for(i in seq(1,subsize)) {
-    polcolors[i] <- pColor[treatindeces[i]]
+  treatmentlength <- length(treatindeces)
+  polscorer <- rep(0, treatmentlength)
+  for(i in seq(1,treatmentlength)) {
+    polscorer[i] <- xvec[treatindeces[i]]
   }
-  
-  return(polcolors)
+  return(polscorer)
 }
 
 
 #For each of the treatments let us look at the top 4 flower types
-A_poltypes <- flowerPrefTreat("A")
+A_poltypes <- PolScore("A", pColor)
 A_poltypes <- sort(table(A_poltypes),decreasing=TRUE)[1:4]
 barplot(A_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Treatment A flower preferences")
 
-B_poltypes <- flowerPrefTreat("B")
+B_poltypes <- PolScore("B", pColor)
 B_poltypes <- sort(table(B_poltypes),decreasing=TRUE)[1:4]
 barplot(B_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Treatment B flower preferences")
 
-C_poltypes <- flowerPrefTreat("C")
+C_poltypes <- PolScore("C", pColor)
 C_poltypes <- sort(table(C_poltypes),decreasing=TRUE)[1:4]
 barplot(C_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Treatment C flower preferences")
 
-D_poltypes <- flowerPrefTreat("D")
+D_poltypes <- PolScore("D", pColor)
 D_poltypes <- sort(table(D_poltypes),decreasing=TRUE)[1:4]
 barplot(D_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Treatment D flower preferences")
+
+########## POLLEN SCORE OVER TIME ###############
+
 
 
