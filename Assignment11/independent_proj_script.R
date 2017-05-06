@@ -259,6 +259,15 @@ barplot(D_poltypes, xlab = "Flower Type", ylab = "Total Collected", main = "Trea
 APolScore <- PolScore("A", pScore)
 ADates <- PolScore("A", pDates)
 
+BPolScore <- PolScore("B", pScore)
+BDates <- PolScore("B", pDates)
+
+CPolScore <- PolScore("C", pScore)
+CDates <- PolScore("C", pDates)
+
+DPolScore <- PolScore("D", pScore)
+DDates <- PolScore("D", pDates)
+
 PollenCalculator <- function(treatScore, treatdates) {
   print(treatdates)
   newDates <- rep(0, length(treatdates))
@@ -277,8 +286,21 @@ PollenCalculator <- function(treatScore, treatdates) {
 }
 
 #And once again we can use our average function
-ATotalScore <- AvgReg(PollenCalculator(APolScore, ADates))
+#Once that has been calculated we can plot with regression lines
 
+ATotalScore <- AvgReg(PollenCalculator(APolScore, ADates))
 plot(ATotalScore[,1], ATotalScore[,2], xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment A Pollen Load Collection")
 abline(lm(ATotalScore[,2]~ATotalScore[,1]), col="red")
+
+BTotalScore <- AvgReg(PollenCalculator(BPolScore, BDates))
+plot(BTotalScore[,1], BTotalScore[,2], xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment B Pollen Load Collection")
+abline(lm(BTotalScore[,2]~BTotalScore[,1]), col="blue")
+
+CTotalScore <- AvgReg(PollenCalculator(CPolScore, CDates))
+plot(CTotalScore[,1], CTotalScore[,2], xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment C Pollen Load Collection")
+abline(lm(CTotalScore[,2]~CTotalScore[,1]), col="black")
+
+DTotalScore <- AvgReg(PollenCalculator(DPolScore, DDates))
+plot(DTotalScore[,1], DTotalScore[,2], xlab = "Days from start of Experiment", ylab = "Pollen Load Collected", main = "Treatment D Pollen Load Collection")
+abline(lm(DTotalScore[,2]~DTotalScore[,1]), col="green")
 
