@@ -1,17 +1,17 @@
-setwd("/Users/subi/Desktop/CompBioLabsAndAssignments/Assignment11")
+#setwd("/Users/subi/Desktop/CompBioLabsAndAssignments/Assignment11")
 
 #The above is to set my working directory to where my files will be
 #Using the r package rio we can convert our xlsx files to csv files
 
-library(rio)
-convert("Pollen_score_colour.xlsx", "Pollen_score_colour.csv")
-convert("Foraging_duration.xlsx", "Foraging_duration.csv")
+#library(rio)
+#convert("Pollen_score_colour.xlsx", "Pollen_score_colour.csv")
+#convert("Foraging_duration.xlsx", "Foraging_duration.csv")
 
 #This way all of the empty cells are turned into NAs as well
 #Now we can actually read them in and remove all of the NA values
 
-PollenData <- read.csv("Pollen_score_colour.csv")
-ForagingData <- read.csv("Foraging_duration.csv")
+PollenData <- file.choose("Pollen_score_colour.csv")
+ForagingData <- file.choose("Foraging_duration.csv")
 
 #Fixing the Pollen Data csv file
 #Some of the pollen colours are listed as "?" and so we can replace them with NA
@@ -80,8 +80,6 @@ AvgReg <- function(matrixVals) {
   return(avgMatrix)
 }
 
-
-
 #Now that we have the matrix of just what we want we can plot it
 Aregression <- ForagingReg("A")
 AregAvg <- AvgReg(Aregression)
@@ -99,9 +97,6 @@ plot(CregAvg[,1], CregAvg[,2], main = "Average C Treatment Foraging Bouts",xlab 
 Dregression <- ForagingReg("D")
 DregAvg <- AvgReg(Dregression)
 plot(DregAvg[,1], DregAvg[,2], main = "D Treatment Foraging Bouts",xlab = "Days since start of experiment", ylab = "Number of Foraging Bouts")
-
-
-
 
 
 ########## POLLEN SCORE POISSON CALCULATIONS #################
