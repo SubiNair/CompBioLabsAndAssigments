@@ -7,6 +7,9 @@
 #convert("Foraging_duration.xlsx", "Foraging_duration.csv")
 #This is why there are csv files that are able to be read
 
+#IMPORTANT
+#The files need to be read in the following order
+
 PollenData <- read.csv(file.choose("Pollen_score_colour.csv"))
 ForagingData <- read.csv(file.choose("Foraging_duration.csv"))
 
