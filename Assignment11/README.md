@@ -28,8 +28,11 @@ In addition the researchers analyzed how the pesticide exposure affected the lea
 ##### My Project and Analysis 
 I recreated some of the original analyses, by creating regressions based on the average number of foraging bouts per day and the average pollen score per day for each of the treatments. I also created barplots of the bees flower preferences with each treatment. 
 
+In order to better handle the data, I used an R package called rio to change the .xlsx files to .csv files.
+
 I also did some of my own Poisson distribution analysis by using the dpois function in R to model the exact probabilities of a bumblebee bringing back a certain amount of pollen for each of the treatments.  The researchers had used a Poisson distribution to model the number of foragers and the foraging bouts but they didn't apply the model to the pollen data, which is what I was more focused on for this project. I also did not focus on forager age and size like the researchers did for their original experiment. 
 
+I wanted to draw more attention to how these toxins affect bees at a more basic level, more specifically in their foraging behavior. This is an essential part of their survival and prolonged exposure to nonlethal levels of pesticides still has a heavy impact. 
 ### Results and Conclusions
 The treatments are listed as A, B, C, D, which denote the LC (λ-cyhalothrin), M (The mix of the two), The Control, and I (imidacloprid) respectively. 
 
