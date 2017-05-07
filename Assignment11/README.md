@@ -81,6 +81,7 @@ The original study points out that LC has might stunt bee learning as the bees g
 Gill RJ, Raine NE (2014) Chronic impairment of bumblebee natural foraging behaviour induced by sublethal pesticide exposure. Functional Ecology, 28, 1459–1471.
 
 [The publication can be found here](http://onlinelibrary.wiley.com/doi/10.1111/1365-2435.12292/full)
+
 [Data used](http://datadryad.org/resource/doi:10.5061/dryad.kv558)
 
 
